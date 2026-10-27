@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Kiku AI | Dashboard</title>
+    <style>
+        .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .role-card { cursor: pointer; padding: 40px; border: 2px solid transparent; transition: 0.3s; }
+        .role-card:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.1); }
+        .role-icon { font-size: 40px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    <div class="container">
+        <h2 style="margin-bottom: 10px;">Welcome, User</h2>
+        <p style="color: var(--text-dim);">Please select your role for this session.</p>
+        
+        <div class="roles">
+            <div class="glass-card role-card" onclick="window.location.href='/static/presenter.html'">
+                <div class="role-icon">🎙️</div>
+                <h3>I am a Speaker</h3>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Start a session and broadcast live translation.</p>
+            </div>
+            <div class="glass-card role-card" onclick="window.location.href='/static/audience.html'">
+                <div class="role-icon">🎧</div>
+                <h3>I am an Audience</h3>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Join a session and view live transcripts.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+        }
+    </script>
+</body>
+</html>

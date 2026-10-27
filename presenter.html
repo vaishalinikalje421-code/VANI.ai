@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vani AI | Presenter Dashboard</title>
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <link rel="stylesheet" href="/static/css/effects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="pres-body">
+
+    <div class="pres-wrapper">
+        <aside class="pres-sidebar">
+            <div class="pres-logo">Vani<span>.ai</span></div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="location.reload()"><i class="fas fa-plus"></i> New Transcription</a>
+                <a href="#" class="nav-item"><i class="fas fa-save"></i> Save</a>
+                <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile</a>
+            </nav>
+        </aside>
+
+        <main class="pres-main">
+            
+            <div class="transcription-window">
+                
+                <div class="window-controls">
+                    <div class="control-group">
+                        <select id="source-lang" class="lang-dropdown">
+                            <option value="en">English (US)</option>
+                            <option value="hi">Hindi (IN)</option>
+                            <option value="ja">Japanese (JP)</option>
+                        </select>
+                        <button id="startBtn" class="btn-start" onclick="startEngine()"><i class="fas fa-play"></i> Start</button>
+                        <button id="stopBtn" class="btn-stop" onclick="stopEngine()" disabled><i class="fas fa-stop"></i> Stop</button>
+                    </div>
+                    <div id="status" class="status-badge">Ready</div>
+                </div>
+
+                <div id="transcript-display" class="transcript-canvas">
+                    <div class="hint-text" id="hint">Select your language and click Start...</div>
+                    <span id="final-span"></span>
+                    <span id="partial-span" style="color: #888; font-style: italic;"></span>
+                    <div id="live-translation" style="margin-top: 20px; color: #3b82f6; font-weight: 600; border-top: 1px solid #eee; padding-top: 10px;"></div>
+                </div>
+            </div>
+
+            <footer class="bottom-actions">
+                <div class="action-buttons">
+                    <button class="btn-outline" onclick="alert('Transcript Saved!')"><i class="fas fa-bookmark"></i> Save</button>
+                    <button class="btn-outline" onclick="alert('Exporting as TXT...')"><i class="fas fa-download"></i> Export</button>
+                </div>
+                
+                <div class="toggle-container">
+                    <span class="toggle-label">Translate To:</span>
+                    <select id="presenter-target-lang" class="lang-dropdown" style="margin-right: 10px;" disabled>
+                        <option value="hi">Hindi</option>
+                        <option value="mr">Marathi</option>
+                        <option value="ja">Japanese</option>
+                        <option value="es">Spanish</option>
+                    </select>
+                    <label class="switch">
+                        <input type="checkbox" id="translate-toggle" onchange="toggleTranslation(this)">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <script type="module" src="/static/js/presenter_engine.js"></script>
+</body>
+</html>
