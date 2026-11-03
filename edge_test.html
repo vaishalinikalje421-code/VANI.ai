@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edge Fallback - Clean Room Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background: #1e1e2e; color: #cdd6f4; }
+        .box { background: #313244; padding: 20px; border-radius: 8px; max-width: 500px; margin: 0 auto; }
+        button { padding: 10px 15px; background: #89b4fa; color: #11111b; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+        button:disabled { background: #585b70; cursor: not-allowed; }
+        #log { margin-top: 20px; padding: 10px; background: #11111b; border-radius: 5px; font-family: monospace; white-space: pre-wrap; height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>⚡ Edge AI Engine (Whisper-Tiny)</h2>
+        <p>This runs 100% locally in your browser. No Python. No WebSockets.</p>
+        
+        <button id="loadBtn">1. Download & Load AI Model</button>
+        <button id="testBtn" disabled>2. Test Transcription</button>
+        
+        <div id="log">Waiting to start...</div>
+    </div>
+
+    <script type="module">
+        import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.16.0';
+
+        // Ensure models are downloaded from the Hugging Face Hub cache
+        env.allowLocalModels = false;
+
+        let transcriber = null;
+        const logDiv = document.getElementById('log');
+
+        function log(msg) {
+            console.log(msg);
+            logDiv.innerText += `\n> ${msg}`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        // --- STEP 1: Load the Model ---
+        document.getElementById('loadBtn').addEventListener('click', async () => {
+            document.getElementById('loadBtn').disabled = true;
+            log("⏳ Loading Edge AI from local browser cache...");
+
+            try {
+                transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-base.en');
+                log("✅ Edge AI successfully loaded into memory!");
+                document.getElementById('testBtn').disabled = false;
+            } catch (error) {
+                log(`❌ Failed to load model: ${error}`);
+            }
+        });
+
+        // --- STEP 2: Live Offline Microphone Test ---
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            document.getElementById('testBtn').disabled = true;
+            log("🎙️ Requesting microphone access...");
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                log("✅ Mic connected! 🔴 RECORDING FOR 5 SECONDS... Speak now!");
+                
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+                const source = audioContext.createMediaStreamSource(stream);
+                const processor = audioContext.createScriptProcessor(4096, 1, 1);
+                
+                let audioChunks = [];
+                let recordingLength = 0;
+                
+                processor.onaudioprocess = (e) => {
+                    const channelData = e.inputBuffer.getChannelData(0);
+                    // Copy the float32 data
+                    audioChunks.push(new Float32Array(channelData));
+                    recordingLength += channelData.length;
+                };
+                
+                source.connect(processor);
+                processor.connect(audioContext.destination);
+                
+                // Stop recording after 5 seconds
+                setTimeout(async () => {
+                    source.disconnect();
+                    processor.disconnect();
+                    stream.getTracks().forEach(track => track.stop()); // Turn off the mic light
+                    
+                    log("🛑 Recording stopped. Stitching audio...");
+                    
+                    // Combine all chunks into one Float32Array for the AI
+                    const audioData = new Float32Array(recordingLength);
+                    let offset = 0;
+                    for (let i = 0; i < audioChunks.length; i++) {
+                        audioData.set(audioChunks[i], offset);
+                        offset += audioChunks[i].length;
+                    }
+                    
+                    log("🧠 Edge Engine processing locally...");
+                    const startTime = performance.now();
+
+                    try {
+                        // THE FIX: We pass audioData here, NOT testAudioURL
+                        const output = await transcriber(audioData); 
+                        const timeTaken = ((performance.now() - startTime) / 1000).toFixed(2);
+                        
+                        log("===============================");
+                        log(`📝 RESULT: "${output.text}"`);
+                        log(`⏱️ Latency: ${timeTaken} seconds`);
+                        log("===============================");
+                        
+                    } catch (aiError) {
+                        log(`❌ AI Processing Error: ${aiError}`);
+                    }
+                    
+                    document.getElementById('testBtn').disabled = false;
+                }, 5000);
+
+            } catch (micError) {
+                log(`❌ Mic Access Denied or Failed: ${micError}`);
+                document.getElementById('testBtn').disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vani.ai | Login</title>
+
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">
+            Vani<span>.ai</span>
+        </div>
+
+        <h1>Welcome back</h1>
+        <p class="subtitle">Sign in to continue to Vani.ai</p>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <div class="form-options">
+                <label class="remember">
+                    <input type="checkbox" id="remember">
+                    Remember me
+                </label>
+
+                <a href="#" id="forgotPassword">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Sign in
+            </button>
+
+        </form>
+
+        <p class="signup-text">
+            Don't have an account?
+            <a href="#" id="signupLink">Sign up</a>
+        </p>
+
+        <p class="footer-text">
+            © 2026 Vani.ai. All rights reserved.
+        </p>
+
+    </div>
+
+    <script src="/static/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vani AI | Audience Live Stream</title>
+     <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <link rel="stylesheet" href="/static/css/effects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="aud-body">
+
+    <div class="aud-wrapper">
+        <aside class="aud-sidebar">
+            <div class="sidebar-icon active"><i class="fas fa-headphones"></i></div>
+            <div class="sidebar-icon"><i class="fas fa-history"></i></div>
+            <div class="sidebar-icon"><i class="fas fa-download"></i></div>
+        </aside>
+
+        <main class="aud-main">
+            <header class="aud-header">
+                <div class="aud-logo">Vani<span>.ai</span></div>
+                <div id="status-badge" class="status-offline">Offline</div>
+            </header>
+
+            <div class="connection-panel">
+                <div class="input-row">
+                    <input type="text" id="viewer-name" class="aud-input" placeholder="Your Name">
+                    
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: #475569; margin-left: 10px;">
+                        <input type="checkbox" id="aud-translate-toggle" style="width: 18px; height: 18px;">
+                        Translate to:
+                    </label>
+                    
+                    <select id="target-lang" class="aud-dropdown">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="mr">Marathi</option>
+                        <option value="ja">Japanese</option>
+                    </select>
+                </div>
+
+                <div class="input-row">
+                    <button id="pauseBtn" class="btn-black" onclick="toggleFeed()"><i class="fas fa-pause"></i> Pause Feed</button>
+                    <input type="text" id="room-link" class="aud-input link-input" placeholder="Enter Room Link / ID (e.g., VANI-123)">
+                    <button id="joinBtn" class="btn-blue" onclick="joinStream()">Join Room</button>
+                </div>
+            </div>
+
+            <div class="aud-canvas-container">
+                <div id="live-transcript" class="aud-canvas">
+                    <div class="hint-text" id="aud-hint">Enter the room link above and click Join to see the live stream...</div>
+                    <div class="transcript-bubble" style="display: none;" id="bubble-container">
+                        <span id="final-span"></span>
+                        <span id="partial-span" style="color: #94a3b8; font-style: italic;"></span>
+                    </div>
+                    <div id="live-translation" style="margin-top: 15px; color: #2563eb; font-weight: 600;"></div>
+                </div>
+            </div>
+
+            <button class="fab-bot" onclick="openAudienceBot()">
+                <i class="fas fa-robot"></i>
+            </button>
+        </main>
+    </div>
+
+    <script src="/static/js/audience_engine.js"></script>
+</body>
+</html>
