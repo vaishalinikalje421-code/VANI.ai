@@ -1,0 +1,57 @@
+# 🎙️ VANI.AI – Intelligent Real-Time Speech Recognition
+
+VANI.AI is a multilingual, real-time speech recognition and transcription platform that converts spoken language into readable text.
+
+The project focuses on improving transcription accuracy, especially when handling technical terminology, scientific vocabulary, abbreviations, mathematical expressions, and structured information.
+
+## ✨ Features
+
+- **Real-Time Speech Transcription** – Converts spoken input into text.
+- **Multilingual Support** – Supports transcription across multiple languages.
+- **Technical Vocabulary Recognition** – Focuses on technical terms, scientific words, and abbreviations.
+- **Structured Information Processing** – Aims to handle formulas, symbols, and structured content.
+- **Interactive User Interface** – Displays live transcription results.
+- **Offline Transcription Support** – Includes a Whisper-based offline transcription approach.
+
+## 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| HTML5, CSS3, JavaScript | Frontend development |
+| Python | Backend processing |
+| FastAPI | Backend API |
+| WebSockets | Real-time communication |
+| Speechmatics | Speech recognition |
+| Whisper | Speech recognition and offline transcription |
+| Google Translate API | Language translation |
+| WebAssembly | Browser-based offline processing |
+
+## ⚙️ How It Works
+
+1. The user provides audio input through the web interface.
+2. The audio is processed by the speech recognition system.
+3. Spoken language is converted into text.
+4. Transcription results are delivered to the frontend.
+5. The interface displays the generated transcription in real time.
+
+## 🎯 Project Objective
+
+The primary objective of VANI.AI is to make speech recognition more effective in technical and educational environments by addressing challenges involving specialized terminology, scientific expressions, formulas, symbols, and structured information.
+
+## 🚀 Future Enhancements
+
+- Improve recognition of domain-specific vocabulary.
+- Enhance mathematical expression and scientific notation handling.
+- Improve transcription accuracy.
+- Expand language support.
+- Enhance structured information extraction.
+
+## 📌 Project Details
+
+- **Project Name:** VANI.AI
+- **Project Type:** Real-Time Speech Recognition Platform
+- **Domain:** Artificial Intelligence / Speech Processing
+
+---
+
+**VANI.AI – Making Speech Recognition Smarter and More Accessible.**
